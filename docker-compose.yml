@@ -1,0 +1,143 @@
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    volumes:
+      - /root/docker/traefik:/etc/traefik
+      - /root/docker-data/traefik/log:/etc/traefik-log
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    environment:
+      - DOCKER_HOST=tcp://socket-proxy:2375
+      - TZ=Europe/Zurich
+      - CLOUDFLARE_EMAIL=${CF_EMAIL}
+      - CLOUDFLARE_API_KEY=${CF_API_KEY}
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002        
+    restart: always
+    networks: 
+      - napadelice
+      - socket_proxy
+
+  # Cloudflare DDNS - Dynamic DNS Updater
+  cf-ddns:
+    container_name: cf-ddns
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    environment:
+      - API_KEY=${CF_DDNS_API_KEY}
+      - ZONE=${CF_DDNS_ZONE}
+      - PROXIED=false
+      - RRTYPE=A
+      - DELETE_ON_STOP=false
+      - DNS_SERVER=1.1.1.1
+    networks:
+      - napadelice      
+
+  #Cloudflare-Companion - Automatic CNAME DNS Creation
+  cf-companion:
+    container_name: cf-companion
+    image: tiredofit/traefik-cloudflare-companion:latest
+    restart: always
+    environment:
+      - DOCKER_HOST=tcp://socket-proxy:2375
+      - TRAEFIK_VERSION=3
+      - CF_EMAIL=${CF_EMAIL}
+      - CF_TOKEN=${CF_API_KEY}
+      - TARGET_DOMAIN=${TARGET_DOMAIN}
+      - DOMAIN1=${DOMAIN1}
+      - DOMAIN1_ZONE_ID=${DOMAIN1_ZONE_ID}
+      - DOMAIN1_PROXIED=FALSE
+      - DOMAIN1_TARGET_DOMAIN=${DOMAIN1_TARGET_DOMAIN}
+      #- DOMAIN2=${DOMAIN2}
+      #- DOMAIN2_ZONE_ID=${DOMAIN2_ZONE_ID}
+      #- DOMAIN2_PROXIED=TRUE
+      #- DOMAIN2_TARGET_DOMAIN=${DOMAIN2_TARGET_DOMAIN}
+    #labels:
+      #Add hosts specified in rules here to force cf-companion to create the CNAMEs
+      #Since cf-companion creates CNAMEs based on host rules, this a workaround for non-docker/external apps
+      #- "traefik.http.routers.cf-companion-rtr.rule=HostHeader(`pihole.$DOMAINNAME`) || HostHeader(`hassio.$DOMAINNAME`)"
+    networks:
+      - napadelice      
+      - socket_proxy
+
+  # Docker Socket Proxy - Security Enchanced Proxy for Docker Socket
+  socket-proxy:
+    #<<: *common-keys-core # See EXTENSION FIELDS at the top
+    container_name: socket-proxy
+    image: tecnativa/docker-socket-proxy:latest
+    ports:
+      - 2375:2375    
+    networks:
+      - socket_proxy
+    privileged: true
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - LOG_LEVEL=info # debug,info,notice,warning,err,crit,alert,emerg
+      ## Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc.).
+      # 0 to revoke access.
+      # 1 to grant access.
+      ## Granted by Default
+      - EVENTS=1
+      - PING=1
+      - VERSION=1
+      ## Revoked by Default
+      # Security critical
+      - AUTH=0
+      - SECRETS=0
+      #- POST=1 # Watchtower
+      #- DELETE=1 # Watchtower
+        # GET Optons
+      - BUILD=0
+      - COMMIT=0
+      - CONFIGS=0
+      - CONTAINERS=1 # Traefik, portainer, etc.
+      - DISTRIBUTION=0
+      - EXEC=0
+      #- IMAGES=1 # Portainer, Watchtower
+      #- INFO=1 # Portainer
+      #- NETWORKS=1 # Portainer, Watchtower
+      - NODES=0
+      - PLUGINS=0
+      #- SERVICES=1 # Portainer
+      - SESSION=0
+      - SWARM=0
+      - SYSTEM=0
+      #- TASKS=1 # Portaienr
+      #- VOLUMES=1 # Portainer
+      # POST Options
+      #- CONTAINERS_CREATE=1 # WatchTower
+      #- CONTAINERS_START=1 # WatchTower
+      #- CONTAINERS_UPDATE=1 # WatchTower
+      # DELETE Options
+      #- CONTAINERS_DELETE=1 # WatchTower
+      #- IMAGES_DELETE=1 # WatchTower  
+
+  apache:
+    image: httpd:2.4
+    container_name: apache
+    ports:
+      - 8084:80
+    volumes:
+      - /root/docker-data/website/src:/usr/local/apache2/htdocs
+      - /root/docker/apache/conf:/usr/local/apache2/conf/
+      - /root/docker-data/apache/log:/usr/local/apache2/logs/
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apache.rule=Host(`parapente.${DOMAIN2}`)"
+      - "traefik.http.routers.apache.entrypoints=websecure"
+      - "traefik.http.routers.apache.tls.certResolver=cloudflare"
+    restart: always
+    networks:
+      - napadelice
+
+networks:
+  napadelice:
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge 
