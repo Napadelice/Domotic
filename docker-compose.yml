@@ -124,12 +124,12 @@ services:
     ports:
       - 8084:80
     volumes:
-      - /root/docker-data/website/src:/usr/local/apache2/htdocs
+      - /root/docker-data/website:/usr/local/apache2/htdocs
       - /root/docker/apache/conf:/usr/local/apache2/conf/
       - /root/docker-data/apache/log:/usr/local/apache2/logs/
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.apache.rule=Host(`parapente.${DOMAIN2}`)"
+      - "traefik.http.routers.apache.rule='Host(`parapente.${DOMAIN2}`) || Host(parapente.${DOMAIN1}`)'"
       - "traefik.http.routers.apache.entrypoints=websecure"
       - "traefik.http.routers.apache.tls.certResolver=cloudflare"
     restart: always
