@@ -17,6 +17,12 @@ entryPoints:
                 certResolver: cloudflare
     traefik:
         address: :8080   
+    synoDrive:
+        address: :6690/TCP
+    synoBackup:
+        address: :6281/TCP  
+    synoActiveBackup:
+        address: :5510/TCP
 ping: {}
 
 log:
