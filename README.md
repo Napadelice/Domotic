@@ -1,1 +1,1 @@
-# Domotic docker-compose configuration
+# docker-compose for Traefik and CloudFlare

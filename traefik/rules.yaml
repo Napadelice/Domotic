@@ -94,6 +94,13 @@ http:
       service: service-homebridge
       tls:
         certResolver: cloudflare
+    router-netdata:
+      entryPoints:
+        - websecure
+      rule: Host(`netdata.alexetnico.com`)
+      service: service-netdata
+      tls:
+        certResolver: cloudflare
   services:    
     service-dsm:
       loadBalancer:
@@ -124,7 +131,13 @@ http:
       loadBalancer:
         passHostHeader: true
         servers:
-        - url: "http://192.168.2.20:8581"  
+        - url: "http://192.168.2.20:8581"
+    service-netdata:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.22:19999" 
+
 tcp:
   middlewares:
     cloudflare-ipwhitelist:
