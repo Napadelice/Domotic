@@ -4,10 +4,10 @@ http:
       chain:
         middlewares:
           - redirect-web-to-websecure@internal
-          - cloudflare-ipwhitelist
+          - cloudflare-ipAllowList
           - secureHeaders
-    cloudflare-ipwhitelist:
-      ipWhiteList:
+    cloudflare-ipAllowList:
+      ipAllowList:
         sourceRange:
           - "192.168.0.0/24"
           - "192.168.2.0/24"
@@ -140,8 +140,8 @@ http:
 
 tcp:
   middlewares:
-    cloudflare-ipwhitelist:
-      ipWhiteList:
+    cloudflare-ipAllowList:
+      ipAllowList:
         sourceRange:
           - "192.168.0.0/24"
           - "192.168.2.0/24"
@@ -173,14 +173,14 @@ tcp:
       rule: "HostSNI(`*`)"
       service: service-synoBackup
       middlewares:
-        - cloudflare-ipwhitelist  
+        - cloudflare-ipAllowList  
     router-synoActiveBackup:
       entryPoints:
         - synoActiveBackup
       rule: "HostSNI(`*`)"
       service: service-synoActiveBackup
       middlewares:
-        - cloudflare-ipwhitelist 
+        - cloudflare-ipAllowList 
     router-synoDrive:
       rule: "HostSNI(`*`)"
       entrypoints:

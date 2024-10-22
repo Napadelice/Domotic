@@ -10,6 +10,7 @@ fi
 #export DOPPLER_TOKEN=<TON_TOKEN>
 
 # Démarre Doppler avec Docker Compose
+doppler run -- bash -c 'envsubst < ./mariadb/init.sql > ./mariadb/processed-init.sql'
 doppler run -- docker compose up -d
 
 echo "Application démarrée avec Doppler."

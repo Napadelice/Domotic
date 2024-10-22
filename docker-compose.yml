@@ -130,60 +130,62 @@ services:
     volumes:
       - ${DOCKER_DATA_DIR}/mariadb:/var/lib/mysql
       - ./mariadb/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf
-      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mariadb/processed-init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
 
-  hass:
-    image: homeassistant/home-assistant:latest
-    hostname: hass
-    restart: always
-    container_name: hass
-    network_mode: "host"
-    volumes:
-      - ./homeassistant:/config
-      - /etc/localtime:/etc/localtime:ro
-      - /run/dbus:/run/dbus:ro
-    depends_on:
-      - mqtt
-      - mariadb
+  # hass:
+  #   image: homeassistant/home-assistant:latest
+  #   hostname: hass
+  #   restart: always
+  #   container_name: hass
+  #   network_mode: "host"
+  #   volumes:
+  #     - ./homeassistant:/config
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - /run/dbus:/run/dbus:ro
+  #   depends_on:
+  #     - mqtt
+  #     - mariadb
 
-  nodered:
-    image: nodered/node-red:latest
-    hostname: nodered
-    restart: always
-    container_name: nodered
-    ports:
-      - "1880:1880"
-    volumes:
-      - ${DOCKER_DATA_DIR}/nodered:/data
-      - /etc/localtime:/etc/localtime:ro
-    depends_on:
-      - mqtt
-    user: "1883:1000"
+  # nodered:
+  #   image: nodered/node-red:latest
+  #   hostname: nodered
+  #   restart: always
+  #   container_name: nodered
+  #   ports:
+  #     - "1880:1880"
+  #   volumes:
+  #     - ${DOCKER_DATA_DIR}/nodered:/data
+  #     - /etc/localtime:/etc/localtime:ro
+  #   depends_on:
+  #     - mqtt
+  #   user: "1883:1000"
 
-  mqtt:
-    image: eclipse-mosquitto
-    hostname: mqtt
-    restart: always
-    container_name: mqtt
-    ports:
-      - "1883:1883"
-      - "9001:9001"
-    volumes:
-      - ${DOCKER_CONF_DIR}/mqtt:/mosquitto/config
-      - ${DOCKER_DATA_DIR}mqtt:/mosquitto/data
-      - ${DOCKER_LOG_DIR}/mqtt:/mosquitto/log
-      - /etc/localtime:/etc/localtime:ro
-    user: "1883:1883"
+  # mqtt:
+  #   image: eclipse-mosquitto
+  #   hostname: mqtt
+  #   restart: always
+  #   container_name: mqtt
+  #   ports:
+  #     - "1883:1883"
+  #     - "9001:9001"
+  #   volumes:
+  #     - ${DOCKER_CONF_DIR}/mqtt:/mosquitto/config
+  #     - ${DOCKER_DATA_DIR}/mqtt:/mosquitto/data
+  #     - ${DOCKER_LOG_DIR}/mqtt:/mosquitto/log
+  #     - /etc/localtime:/etc/localtime:ro
+  #   user: "1883:1883"
 
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:latest
     ports:
       - "8082:8080"    
-    environment:
-      DOCKER_HOST: tcp://socket-proxy:2375
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    #environment:
+    #  DOCKER_HOST: tcp://socket-proxy:2375
     networks:
       - napadelice
       - socket_proxy

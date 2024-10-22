@@ -10,6 +10,7 @@ fi
 #export DOPPLER_TOKEN=<TON_TOKEN>
 
 # Démarre Doppler avec Docker Compose
-doppler run -- docker-compose down
+doppler run -- docker compose down
+rm ./mariadb/processed-init.sql
 
 echo "Application stoppé avec Doppler."
