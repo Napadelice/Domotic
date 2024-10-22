@@ -1,0 +1,158 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+
+automation: !include automations.yaml
+automation manual: !include extra_automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+http:
+ use_x_forwarded_for: true
+ trusted_proxies:
+   - 192.168.2.20
+   - 192.168.2.21
+   - 192.168.2.22
+   
+# Telegram Bot
+telegram_bot:
+  - platform: polling
+    api_key: "5045936051:AAGUYCgUtv7kU5u3IkxtwySzKIeKl4boh_8"
+    allowed_chat_ids:
+      - 2139577190
+      - 5010459722
+      
+# Notifier
+notify:
+  - platform: telegram
+    name: "nicolas"
+    chat_id: 2139577190
+    
+#script:
+#  control_store:
+#    sequence:
+#      - service: rest_command.control_store
+#        data:
+#          action: '{{ action }}'
+
+#rest_command:
+#  control_store:
+#    url: "http://192.168.2.53/api/v1/shade/0/{{ action }}"
+#    method: POST
+    #headers:
+    #  Content-Type: application/json
+    #payload: '{"action": "{{ action }}"}'
+
+#input_select:
+#  store_action:
+#    name: Action du store
+#    options:
+#      - stop
+#      - up
+#      - down
+
+cover:
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.53
+    ip_address: "192.168.2.53"
+    id_cover: 0
+    id_info_cover: 0
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 1 - 192.168.2.53
+    ip_address: "192.168.2.53"
+    id_cover: 1
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.203
+    ip_address: "192.168.2.203"
+    id_cover: 0
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.195
+    ip_address: "192.168.2.195"
+    id_cover: 0
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.125
+    ip_address: "192.168.2.125"
+    id_cover: 0
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.26
+    ip_address: "192.168.2.26"
+    id_cover: 0
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.99
+    ip_address: "192.168.2.99"
+    id_cover: 0
+    id_info_cover: 0
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 1 - 192.168.2.99
+    ip_address: "192.168.2.99"
+    id_cover: 1
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.41
+    ip_address: "192.168.2.41"
+    id_cover: 0
+    id_info_cover: 1
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.181
+    ip_address: "192.168.2.181"
+    id_cover: 0
+    id_info_cover: 1
+    scan_interval: 10    
+  - platform: my_dingz_cover
+    name: Store 0 - 192.168.2.85
+    ip_address: "192.168.2.85"
+    id_cover: 0
+    id_info_cover: 0
+    scan_interval: 10
+  - platform: my_dingz_cover
+    name: Store 1 - 192.168.2.85
+    ip_address: "192.168.2.85"
+    id_cover: 1
+    id_info_cover: 1
+    scan_interval: 10
+
+sensor:
+  - platform: template
+    sensors:
+      energy_price:
+        value_template: >
+          {% set current_time = now().time() %}
+          {% set current_day = now().strftime('%a') %}
+          {% if current_day in ['Sat', 'Sun'] %}
+            0.1914
+          {% elif current_time >= strptime('06:00:00', '%H:%M:%S').time() and current_time < strptime('23:00:00', '%H:%M:%S').time() %}
+            0.256
+          {% else %}
+            0.1914
+          {% endif %}
+        unit_of_measurement: 'CHF/kWh'
+
+      energy_cost:
+        value_template: >
+          {% set total_energy = states('sensor.total_energy') | float(0) %}
+          {% set energy_price = states('sensor.energy_price') | float(0) %}
+          {{ (total_energy * energy_price) | round(2) }}
+        unit_of_measurement: 'CHF'
+
+recorder:
+  db_url: mysql://homeassistant:password_here@192.168.2.22/homeassistant?charset=utf8
+
+

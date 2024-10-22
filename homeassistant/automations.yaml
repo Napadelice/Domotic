@@ -1,0 +1,341 @@
+- id: '1709399069493'
+  alias: LumièreGarage avec Porte
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 8b7adb287c67b4d99fd77ba88ed5e637
+    domain: cover
+    entity_id: 9201ca108f00c99bc110e7bcda57a352
+    type: opened
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 1bc73379af6cf7ad90cc44ddbf60bc23
+    entity_id: 979024160b09f314e2f83763cbd2f3ca
+    domain: switch
+  mode: single
+- id: '1709485071618'
+  alias: Led terrasse lumière on/off detetion
+  description: avec caméra
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: 3e4eb705d098a07835b9de9ffbaff707
+    entity_id: 1061a69e6170613ef6dde49376fcc1ac
+    domain: binary_sensor
+  condition:
+  - type: is_on
+    condition: device
+    device_id: 3e4eb705d098a07835b9de9ffbaff707
+    entity_id: c57c0c72fb759098cb718e2403b93dee
+    domain: binary_sensor
+  action:
+  - type: turn_on
+    device_id: d7f675c3fde59e4bb02944e7abbff3ac
+    entity_id: 9bc44e7fa48fde48a3bfe5f260641ac7
+    domain: light
+    brightness_pct: 50
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - type: turn_off
+    device_id: d7f675c3fde59e4bb02944e7abbff3ac
+    entity_id: 9bc44e7fa48fde48a3bfe5f260641ac7
+    domain: light
+  mode: single
+- id: '1709832720672'
+  alias: Notif Vent 20
+  description: Envoi notifi si vent < 20 Km/h
+  trigger:
+  - type: wind_speed
+    platform: device
+    device_id: 161d31cf72df63ac023b362133075719
+    entity_id: d39f22a984eb7461e3efab4543e57437
+    domain: sensor
+    above: 20
+  condition: []
+  action:
+  - service: notify.nicolas
+    data:
+      message: Vent supérieur à 20 Km/h
+  mode: single
+- id: '1720729345833'
+  alias: Stop ventillateur
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition:
+  - condition: device
+    type: is_on
+    device_id: 316feda4acc8dd71db1c688c5c11ab8d
+    entity_id: d29bccc5cae8a2216901860fd5cc5797
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: 316feda4acc8dd71db1c688c5c11ab8d
+    entity_id: d29bccc5cae8a2216901860fd5cc5797
+    domain: switch
+  mode: single
+- id: '1721158476912'
+  alias: On 23h
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 166eb176ede2a9c7244e85f443c3e07a
+    entity_id: 021e25a66e607d14fb968b9631696953
+    domain: switch
+  mode: single
+- id: '1721158565031'
+  alias: Off 5h
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 166eb176ede2a9c7244e85f443c3e07a
+    entity_id: 021e25a66e607d14fb968b9631696953
+    domain: switch
+  mode: single
+- id: '1724606173137'
+  alias: Store Fermer
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - parallel:
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_26
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_99
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_99
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_53
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_53
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_41
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_181
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_85
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_85
+  - parallel:
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_85
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_26
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_99
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_99
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_53
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_53
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_41
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_181
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_85
+  mode: single
+- id: '1724607611005'
+  alias: Store Fermé Ouvert
+  description: Position en bas avec les lamelles ouvertes
+  trigger: []
+  condition: []
+  action:
+  - parallel:
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_26
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_99
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_99
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_53
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_53
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_41
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_181
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_0_192_168_2_85
+    - service: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 0
+      target:
+        entity_id: cover.store_1_192_168_2_85
+  - parallel:
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_0_192_168_2_26
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_0_192_168_2_99
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_1_192_168_2_99
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_0_192_168_2_53
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_0_192_168_2_41
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_1_192_168_2_53
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_0_192_168_2_181
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_0_192_168_2_85
+    - service: cover.set_cover_tilt_position
+      metadata: {}
+      data:
+        tilt_position: 100
+      target:
+        entity_id: cover.store_1_192_168_2_85
+  mode: single

@@ -1,0 +1,385 @@
+fermer_store_rez:
+  alias: Store Rez Fermer
+  sequence:
+  - service: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - cover.store_diner_nord
+      - cover.store_salon_ouest
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_85
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_26
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_99
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_99
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_41
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_53
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_53
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_85
+  - service: script.fermer_store
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_181
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_85
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_26
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_99
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_99
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_41
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_53
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_53
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_85
+  - service: script.store_lamelles_inclinaison
+    metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_181
+  description: Fermer les stores du rez
+store_rez_en_bas_ouvert:
+  alias: Store Rez En bas ouvert
+  sequence:
+  - metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - cover.store_diner_nord
+      - cover.store_salon_ouest
+    action: cover.close_cover
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_85
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_26
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_99
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_99
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_41
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_53
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_53
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_85
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_181
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_1_192_168_2_85
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_26
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_1_192_168_2_99
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_99
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_41
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_1_192_168_2_53
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_53
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_85
+    action: script.store_lamelles_inclinaison
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_181
+    action: script.store_lamelles_inclinaison
+  - device_id: 34dc6c3ef5d12df8f69ebe9c5ac7d908
+    domain: cover
+    entity_id: c02d95e76658aba3c2bf3adf225e9364
+    type: open
+  - device_id: 289a219583184f5f5fb797f2701e264c
+    domain: cover
+    entity_id: a263f7e200222848aade8215c2955ca1
+    type: open
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - device_id: 34dc6c3ef5d12df8f69ebe9c5ac7d908
+    domain: cover
+    entity_id: c02d95e76658aba3c2bf3adf225e9364
+    type: stop
+  - device_id: 289a219583184f5f5fb797f2701e264c
+    domain: cover
+    entity_id: a263f7e200222848aade8215c2955ca1
+    type: stop
+  description: ''
+fermer_store:
+  alias: Store Position
+  fields:
+    position_du_store:
+      description: Position du store (0-100)
+      example: 50
+      required: true
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 100
+    entity:
+      selector:
+        entity: {}
+      required: true
+  sequence:
+  - service: cover.set_cover_position
+    metadata: {}
+    data:
+      position: '{{ position_du_store }}'
+    target:
+      entity_id:
+      - '{{ entity }}'
+  description: Set la position d'un store
+store_lamelles_inclinaison:
+  alias: Store Lamelles Inclinaison
+  sequence:
+  - service: cover.set_cover_tilt_position
+    metadata: {}
+    data:
+      tilt_position: '{{ position_du_store }}'
+    target:
+      entity_id: '{{ entity }}'
+  fields:
+    position_du_store:
+      description: Position du store (0-100)
+      example: 50
+      required: true
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 100
+    entity:
+      selector:
+        entity: {}
+      required: true
+  description: Set la position d'un store
+store_url:
+  alias: Store URL
+  sequence: []
+  description: ''
+store_rez_ouvrir:
+  alias: Store Rez Ouvrir
+  sequence:
+  - action: cover.open_cover
+    target:
+      entity_id:
+      - cover.store_diner_nord
+      - cover.store_salon_ouest
+    data: {}
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_1_192_168_2_85
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_26
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_1_192_168_2_99
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_99
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_41
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_1_192_168_2_53
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_53
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_85
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 100
+      entity: cover.store_0_192_168_2_181
+    action: script.fermer_store
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_85
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_26
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_99
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_99
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_41
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_1_192_168_2_53
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_53
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_85
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  - metadata: {}
+    data:
+      position_du_store: 0
+      entity: cover.store_0_192_168_2_181
+    action: script.store_lamelles_inclinaison
+    enabled: false
+  description: Ouvrir les stores du rez

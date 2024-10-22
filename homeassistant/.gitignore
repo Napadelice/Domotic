@@ -1,0 +1,9 @@
+# Fichiers sensibles
+secrets.yaml
+home-assistant_v2.db
+backup/
+deps/
+__pycache__/
+
+# Logs
+*.log
