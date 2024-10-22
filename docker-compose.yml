@@ -177,6 +177,16 @@ services:
       - /etc/localtime:/etc/localtime:ro
     user: "1883:1883"
 
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    environment:
+      DOCKER_HOST: tcp://socket-proxy:2375
+    networks:
+      - napadelice
+      - socket_proxy
+    restart: always
+    
 networks:
   napadelice:
   socket_proxy:
