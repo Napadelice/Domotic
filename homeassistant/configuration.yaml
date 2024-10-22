@@ -153,6 +153,6 @@ sensor:
         unit_of_measurement: 'CHF'
 
 recorder:
-  db_url: mysql://homeassistant:password_here@192.168.2.22/homeassistant?charset=utf8
+  db_url: mysql://homeassistant:${MYSQL_PASSWORD}@mariadb/homeassistant?charset=utf8
 
 
