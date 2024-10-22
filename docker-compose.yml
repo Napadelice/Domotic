@@ -134,48 +134,48 @@ services:
     ports:
       - "3306:3306"
 
-    hass:
-        image: homeassistant/home-assistant:latest
-        hostname: hass
-        restart: always
-        container_name: hass
-        network_mode: "host"
-        volumes:
-            - ./homeassistant:/config
-            - /etc/localtime:/etc/localtime:ro
-            - /run/dbus:/run/dbus:ro
-        depends_on:
-          - mqtt
-          - mariadb
+  hass:
+    image: homeassistant/home-assistant:latest
+    hostname: hass
+    restart: always
+    container_name: hass
+    network_mode: "host"
+    volumes:
+      - ./homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    depends_on:
+      - mqtt
+      - mariadb
 
-    nodered:
-        image: nodered/node-red:latest
-        hostname: nodered
-        restart: always
-        container_name: nodered
-        ports:
-            - "1880:1880"
-        volumes:
-            - $(DOCKER_DATA_DIR)/nodered:/data
-            - /etc/localtime:/etc/localtime:ro
-        depends_on:
-          - mqtt
-        user: "1883:1000"
+  nodered:
+    image: nodered/node-red:latest
+    hostname: nodered
+    restart: always
+    container_name: nodered
+    ports:
+      - "1880:1880"
+    volumes:
+      - $(DOCKER_DATA_DIR)/nodered:/data
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mqtt
+    user: "1883:1000"
 
-    mqtt:
-        image: eclipse-mosquitto
-        hostname: mqtt
-        restart: always
-        container_name: mqtt
-        ports:
-            - "1883:1883"
-            - "9001:9001"
-        volumes:
-            - $(DOCKER_CONF_DIR)/mqtt:/mosquitto/config
-            - $(DOCKER_DATA_DIR)mqtt:/mosquitto/data
-            - $(DOCKER_LOG_DIR)/mqtt:/mosquitto/log
-            - /etc/localtime:/etc/localtime:ro
-        user: "1883:1883"
+  mqtt:
+    image: eclipse-mosquitto
+    hostname: mqtt
+    restart: always
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - $(DOCKER_CONF_DIR)/mqtt:/mosquitto/config
+      - $(DOCKER_DATA_DIR)mqtt:/mosquitto/data
+      - $(DOCKER_LOG_DIR)/mqtt:/mosquitto/log
+      - /etc/localtime:/etc/localtime:ro
+    user: "1883:1883"
 
 networks:
   napadelice:

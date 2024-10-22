@@ -10,6 +10,6 @@ fi
 #export DOPPLER_TOKEN=<TON_TOKEN>
 
 # Démarre Doppler avec Docker Compose
-doppler run -- docker-compose up -d
+doppler run -- docker compose up -d
 
 echo "Application démarrée avec Doppler."
