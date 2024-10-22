@@ -4,7 +4,7 @@ services:
     container_name: traefik
     volumes:
       - ./traefik:/etc/traefik
-      - $(DOCKER_LOG_DIR)/traefik:/etc/traefik-log
+      - ${DOCKER_LOG_DIR}/traefik:/etc/traefik-log
     ports:
       - 80:80
       - 443:443
