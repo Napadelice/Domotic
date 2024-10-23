@@ -1,0 +1,9 @@
+{
+  "domain": "my_dingz_cover",
+  "name": "Dingz Cover",
+  "version": "1.0.0",
+  "documentation": "https://github.com/yourusername/my_dingz_cover",
+  "requirements": ["requests"],
+  "dependencies": [],
+  "codeowners": ["@yourusername"]
+}

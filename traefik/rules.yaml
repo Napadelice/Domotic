@@ -59,39 +59,11 @@ http:
       #  - chain-cloudflare
       tls:
         certResolver: cloudflare
-    router-hass:
-      entryPoints:
-        - websecure
-      rule: "Host(`hass.alexetnico.com`) || Host(`hass.napadelice.ch`)"
-      service: service-hass
-      tls:
-        certResolver: cloudflare
-    router-nodered:
-      entryPoints:
-        - websecure
-      rule: Host(`nodered.alexetnico.com`)
-      service: service-nodered
-      tls:
-        certResolver: cloudflare
-    router-guacamole:
-      entryPoints:
-        - websecure
-      rule: Host(`guacamole.alexetnico.com`)
-      service: service-guacamole
-      tls:
-        certResolver: cloudflare     
     router-emby:
       entryPoints:
         - websecure
       rule: "Host(`emby.alexetnico.com`) || Host(`emby.napadelice.ch`)"
       service: service-emby
-      tls:
-        certResolver: cloudflare
-    router-homebridge:
-      entryPoints:
-        - websecure
-      rule: Host(`homebridge.alexetnico.com`)
-      service: service-homebridge
       tls:
         certResolver: cloudflare
     router-netdata:
@@ -107,36 +79,16 @@ http:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.20:9200"
-    service-hass:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-        - url: "http://192.168.2.20:8123"
-    service-nodered:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-        - url: "http://192.168.2.20:1880"
-    service-guacamole:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-        - url: "http://192.168.2.20:8086"
     service-emby:
       loadBalancer:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.20:8096"
-    service-homebridge:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-        - url: "http://192.168.2.20:8581"
     service-netdata:
       loadBalancer:
         passHostHeader: true
         servers:
-        - url: "http://192.168.2.22:19999" 
+        - url: "http://192.168.2.27:19999" 
 
 tcp:
   middlewares:

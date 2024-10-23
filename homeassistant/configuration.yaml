@@ -17,6 +17,7 @@ http:
    - 192.168.2.20
    - 192.168.2.21
    - 192.168.2.22
+   - 192.168.2.27
    
 # Telegram Bot
 telegram_bot:
@@ -153,6 +154,7 @@ sensor:
         unit_of_measurement: 'CHF'
 
 recorder:
-  db_url: mysql://homeassistant:${MYSQL_PASSWORD}@mariadb/homeassistant?charset=utf8
+  db_url: mysql://homeassistant:12Lb7Qev0NJp1YNdAbq3Jmn5asBUqQTSyct56IrnhUi@192.168.2.27/homeassistant?charset=utf8
+  #db_url: mysql://homeassistant:password_here@192.168.2.22/homeassistant?charset=utf8
 
 

@@ -1,0 +1,7 @@
+homeassistant/home-assistant_v2.db-shm
+homeassistant/home-assistant_v2.db-wal
+homeassistant/home-assistant.log.*
+homeassistant/backups/
+
+traefik/acme.json
+homeassistant/home-assistant.log.1

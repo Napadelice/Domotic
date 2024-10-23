@@ -1,0 +1,24 @@
+  - alias: Control Store
+    trigger:
+      - platform: state
+        entity_id: input_select.store_action
+    action:
+      - service: script.control_store
+        data_template:
+          action: '{{ states("input_select.store_action") }}'
+
+  - alias: LumièreGarage avec Porte
+    description: ''
+    trigger:
+    - platform: device
+      device_id: 8b7adb287c67b4d99fd77ba88ed5e637
+      domain: cover
+      entity_id: 9201ca108f00c99bc110e7bcda57a352
+      type: opened
+    condition: []
+    action:
+    - type: turn_on
+      device_id: 1bc73379af6cf7ad90cc44ddbf60bc23
+      entity_id: 979024160b09f314e2f83763cbd2f3ca
+      domain: switch
+    mode: single

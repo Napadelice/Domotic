@@ -1,0 +1,10 @@
+#- id: 'control_store_automation'
+#  alias: Control Store
+#  description: 'Control the store using an input select'
+#  trigger:
+#    - platform: state
+#      entity_id: input_select.store_action
+#  action:
+#    - service: script.control_store
+#      data:
+#        action: '{{ states("input_select.store_action") }}'

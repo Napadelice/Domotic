@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s  # Fréquence de scrutation des cibles
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']  # Scraper Prometheus lui-même
+
+  - job_name: 'netdata-rock5itx'
+    static_configs:
+      - targets: ['192.168.2.27:19999']
+    metrics_path: '/api/v1/allmetrics?format=prometheus'
