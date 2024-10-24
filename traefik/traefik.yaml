@@ -23,10 +23,14 @@ entryPoints:
         address: :6281/TCP  
     synoActiveBackup:
         address: :5510/TCP
+    metrics:
+        address: ":8082"
+
 ping: {}
 
 log:
-    level: info
+    level: debug
+    filePath: /etc/traefik-log/traefik.log 
 
 api:
   dashboard: true
@@ -40,6 +44,7 @@ accessLog:
         headers:
             names:
                 X-Forwarded-For: keep
+
 providers:
     docker:
         endpoint: tcp://socket-proxy:2375
@@ -59,5 +64,12 @@ certificatesResolvers:
                 resolvers:
                 - 1.1.1.1:53
                 - 1.0.0.1:53
+
 serversTransport:
     insecureSkipVerify: true
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+    addEntryPointsLabels: true
+    addServicesLabels: true

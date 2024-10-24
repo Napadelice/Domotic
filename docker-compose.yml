@@ -9,6 +9,7 @@ services:
       - 80:80
       - 443:443
       - 8080:8080
+      - 8082:8082
     environment:
       - DOCKER_HOST=tcp://socket-proxy:2375
       - TZ=Europe/Zurich
@@ -21,6 +22,11 @@ services:
     networks: 
       - napadelice
       - socket_proxy
+    labels:
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${DOMAIN1_TARGET_DOMAIN}`)" # Nom de domaine pour accéder au dashboard
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"  # Service Traefik interne pour le dashboard
+      - "traefik.http.routers.traefik-dashboard.entrypoints=websecure" 
+      - "traefik.http.routers.traefik-dashboard.tls.certresolver=cloudflare"
 
   # Cloudflare DDNS - Dynamic DNS Updater
   cf-ddns:
@@ -163,7 +169,7 @@ services:
       - "traefik.http.routers.hass.rule=Host(`hass.${DOMAIN1_TARGET_DOMAIN}`)"
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=cloudflare"
-      - "traefik.http.services.hass.loadbalancer.server.port=1880"
+      - "traefik.http.services.hass.loadbalancer.server.port=8123"
 
   nodered:
     image: nodered/node-red:latest
@@ -234,8 +240,26 @@ services:
       - "traefik.http.routers.prometheus.tls.certresolver=cloudflare"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090" 
 
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ${DOCKER_DATA_DIR}/grafana:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - napadelice
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=cloudflare"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000" 
+
 networks:
   napadelice:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
   socket_proxy:
     name: socket_proxy
     driver: bridge 

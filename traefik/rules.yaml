@@ -73,6 +73,7 @@ http:
       service: service-netdata
       tls:
         certResolver: cloudflare
+
   services:    
     service-dsm:
       loadBalancer:

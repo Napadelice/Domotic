@@ -10,3 +10,7 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.2.27:19999']
     metrics_path: '/api/v1/allmetrics?format=prometheus'
+
+  - job_name: "traefik"
+    static_configs:
+      - targets: ['traefik:8082']
