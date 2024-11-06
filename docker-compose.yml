@@ -164,12 +164,12 @@ services:
     depends_on:
       - mqtt
       - mariadb
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.hass.rule=Host(`hass.${DOMAIN1_TARGET_DOMAIN}`)"
-      - "traefik.http.routers.hass.entrypoints=websecure"
-      - "traefik.http.routers.hass.tls.certresolver=cloudflare"
-      - "traefik.http.services.hass.loadbalancer.server.port=8123"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.hass.rule=Host(`hass.${DOMAIN1_TARGET_DOMAIN}`)"
+    #   - "traefik.http.routers.hass.entrypoints=websecure"
+    #   - "traefik.http.routers.hass.tls.certresolver=cloudflare"
+    #   - "traefik.http.services.hass.loadbalancer.servers.url=http://192.168.2.27:8123"
 
   nodered:
     image: nodered/node-red:latest
@@ -253,6 +253,30 @@ services:
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=cloudflare"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000" 
+
+  ntopng:
+    image: ntop/ntopng_arm64.dev
+    container_name: ntopng
+    #ports:
+    #  - "3001:3000"  # Port par défaut pour l'interface web ntopng
+    #  - "5556:5556"  # Port pour le flux NetFlow/sFlow (optionnel)
+    volumes:
+      - ${DOCKER_CONF_DIR}/ntopng/ntopng.conf:/etc/ntopng/ntopng.conf  # Configuration personnalisée
+      #- ${DOCKER_CONF_DIR}/ntopng/ntopng.license:/etc/ntopng.license  # Licence (si nécessaire)
+      - ${DOCKER_DATA_DIR}/ntopng:/var/lib/ntopng  # Volume de données persistant
+    environment:
+      - TZ=Europe/Zurich  # Définir le fuseau horaire (adapter si nécessaire)
+      - NTOPNG_ARGS=--community 
+    restart: unless-stopped
+    networks:
+      - napadelice
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ntopng.rule=Host(`ntopng.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.ntopng.entrypoints=websecure"
+      - "traefik.http.routers.ntopng.tls.certresolver=cloudflare"
+      - "traefik.http.services.ntopng.loadbalancer.server.port=3000"
+
 
 networks:
   napadelice:

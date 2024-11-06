@@ -73,6 +73,13 @@ http:
       service: service-netdata
       tls:
         certResolver: cloudflare
+    router-hass:
+      entryPoints:
+        - websecure
+      rule: Host(`hass.alexetnico.com`)
+      service: service-hass
+      tls:
+        certResolver: cloudflare
 
   services:    
     service-dsm:
@@ -90,6 +97,11 @@ http:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.27:19999" 
+    service-hass:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.27:8123" 
 
 tcp:
   middlewares:
