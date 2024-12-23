@@ -82,28 +82,20 @@
 - id: '1721158476912'
   alias: On 23h
   description: ''
-  trigger:
-  - platform: time
-    at: '23:00:00'
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 166eb176ede2a9c7244e85f443c3e07a
-    entity_id: 021e25a66e607d14fb968b9631696953
-    domain: switch
+  triggers:
+  - at: '23:00:00'
+    trigger: time
+  conditions: []
+  actions: []
   mode: single
 - id: '1721158565031'
   alias: Off 5h
   description: ''
-  trigger:
-  - platform: time
-    at: 05:00:00
-  condition: []
-  action:
-  - type: turn_off
-    device_id: 166eb176ede2a9c7244e85f443c3e07a
-    entity_id: 021e25a66e607d14fb968b9631696953
-    domain: switch
+  triggers:
+  - at: 05:00:00
+    trigger: time
+  conditions: []
+  actions: []
   mode: single
 - id: '1724606173137'
   alias: Store Fermer

@@ -296,6 +296,20 @@ services:
       - "traefik.http.routers.openwebui.tls.certresolver=cloudflare"
       - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
 
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    volumes:
+      - /srv/docker/Domotic/esphome/config:/config
+    network_mode: host
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.esphome.rule=Host(`esphome.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.esphome.entrypoints=websecure"
+      - "traefik.http.routers.esphome.tls.certresolver=cloudflare"
+      - "traefik.http.services.esphome.loadbalancer.server.port=6052"    
+
 volumes:
   open-webui:
 networks:
