@@ -80,6 +80,13 @@ http:
       service: service-hass
       tls:
         certResolver: cloudflare
+    router-esphome:
+      entryPoints:
+        - websecure
+      rule: Host(`esphome.alexetnico.com`)
+      service: service-esphome
+      tls:
+        certResolver: cloudflare        
     router-gitea:
       entryPoints:
         - websecure
@@ -108,7 +115,12 @@ http:
       loadBalancer:
         passHostHeader: true
         servers:
-        - url: "http://192.168.2.27:8123" 
+        - url: "http://192.168.2.27:8123"
+    service-esphome:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.27:6052"         
     service-gitea:
       loadBalancer:
         passHostHeader: true
