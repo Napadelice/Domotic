@@ -249,6 +249,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    container_name: grafana
     volumes:
       - ${DOCKER_DATA_DIR}/grafana:/var/lib/grafana
     restart: unless-stopped
@@ -404,7 +405,7 @@ services:
     ## Storage Folders: "~" is a shortcut for your home directory, "." for the current directory
     volumes:
       # "/host/folder:/photoprism/folder"                # Example
-      - "/srv/docker-data/data/photoprism/photos:/photoprism/originals"               # Original media files (DO NOT REMOVE)
+      - "/srv/docker-data/data/photoprism/photos/photo:/photoprism/originals"               # Original media files (DO NOT REMOVE)
       # - "/example/family:/photoprism/originals/family" # *Additional* media folders can be mounted like this
       # - "~/Import:/photoprism/import"                  # *Optional* base folder from which files can be imported to originals
       - "/srv/docker-data/data/photoprism/storage:/photoprism/storage"                  # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
