@@ -59,6 +59,13 @@ http:
       #  - chain-cloudflare
       tls:
         certResolver: cloudflare
+    vdsm-dsm:
+      entryPoints:
+        - websecure
+      rule: "Host(`vdsm.alexetnico.com`) || Host(`vdsm.napadelice.ch`)"
+      service: service-vdsm
+      tls:
+        certResolver: cloudflare
     router-emby:
       entryPoints:
         - websecure
@@ -101,6 +108,11 @@ http:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.20:9200"
+    service-vdsm:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.50:5000"
     service-emby:
       loadBalancer:
         passHostHeader: true

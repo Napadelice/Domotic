@@ -24,7 +24,18 @@ entryPoints:
     synoActiveBackup:
         address: :5510/TCP
     metrics:
-        address: ":8082"
+        address: :8082
+    mqtt:
+        address: :1883
+    mqttsecure:
+        address: :8883
+        # tcp:
+        #     tls:
+        #         options:
+        #             mintls12:
+        #                 minVersion: VersionTLS12
+        #             mintls13:
+        #                 minVersion: VersionTLS13
 
 ping: {}
 
@@ -58,6 +69,7 @@ certificatesResolvers:
         acme:
             email: cloudflare@bordetnico.com
             storage: /etc/traefik/acme.json
+            tlschallenge: true
             dnsChallenge:
                 provider: cloudflare
                 delayBeforeCheck: 0

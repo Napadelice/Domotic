@@ -23,6 +23,7 @@ services:
       - napadelice
       - socket_proxy
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${DOMAIN1_TARGET_DOMAIN}`)" # Nom de domaine pour accéder au dashboard
       - "traefik.http.routers.traefik-dashboard.service=api@internal"  # Service Traefik interne pour le dashboard
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure" 
@@ -199,6 +200,27 @@ services:
       - "traefik.http.routers.nodered.tls.certresolver=cloudflare"
       - "traefik.http.services.nodered.loadbalancer.server.port=1880"
 
+  noderedtest:
+    image: nodered/node-red:latest
+    hostname: noderedtest
+    restart: always
+    container_name: noderedtest
+    ports:
+      - "1882:1880"
+    volumes:
+      - ${DOCKER_DATA_DIR}/noderedtest:/data
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mqtt
+    networks:
+      - napadelice
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.noderedtest.rule=Host(`noderedtest.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.noderedtest.entrypoints=websecure"
+      - "traefik.http.routers.noderedtest.tls.certresolver=cloudflare"
+      - "traefik.http.services.noderedtest.loadbalancer.server.port=1880"
+
   mqtt:
     image: eclipse-mosquitto
     hostname: mqtt
@@ -215,6 +237,19 @@ services:
     networks:
       - napadelice
     user: "1883:1883"
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
+      - "traefik.tcp.routers.mqtt.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.mqtt.service=mqtt"
+      - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
+
+      - "traefik.tcp.routers.mqttsecure.entrypoints=mqttsecure"
+      - "traefik.tcp.routers.mqttsecure.tls=true"
+      - "traefik.tcp.routers.mqttsecure.tls.certresolver=cloudflare"
+      - "traefik.tcp.routers.mqttsecure.rule=HostSNI(`mqtts.alexetnico.com`)"
+      - "traefik.tcp.routers.mqttsecure.service=mqtt"
 
   dozzle:
     container_name: dozzle
