@@ -18,18 +18,18 @@ http:
    - 172.22.0.0/24
    
 # Telegram Bot
-telegram_bot:
-  - platform: polling
-    api_key: "5045936051:AAGUYCgUtv7kU5u3IkxtwySzKIeKl4boh_8"
-    allowed_chat_ids:
-      - 2139577190
-      - 5010459722
+# telegram_bot:
+#   - platform: polling
+#     api_key: "5045936051:AAGUYCgUtv7kU5u3IkxtwySzKIeKl4boh_8"
+#     allowed_chat_ids:
+#       - 2139577190
+#       - 5010459722
       
 # Notifier
-notify:
-  - platform: telegram
-    name: "nicolas"
-    chat_id: 2139577190
+# notify:
+#   - platform: telegram
+#     name: "nicolas"
+#     chat_id: 2139577190
     
 #script:
 #  control_store:
