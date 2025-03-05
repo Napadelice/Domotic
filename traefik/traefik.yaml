@@ -69,7 +69,7 @@ certificatesResolvers:
         acme:
             email: cloudflare@bordetnico.com
             storage: /etc/traefik/acme.json
-            tlschallenge: true
+            #tlschallenge: true
             dnsChallenge:
                 provider: cloudflare
                 delayBeforeCheck: 0

@@ -245,11 +245,11 @@ services:
       - "traefik.tcp.routers.mqtt.service=mqtt"
       - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
 
-      - "traefik.tcp.routers.mqttsecure.entrypoints=mqttsecure"
-      - "traefik.tcp.routers.mqttsecure.tls=true"
-      - "traefik.tcp.routers.mqttsecure.tls.certresolver=cloudflare"
-      - "traefik.tcp.routers.mqttsecure.rule=HostSNI(`mqtts.alexetnico.com`)"
-      - "traefik.tcp.routers.mqttsecure.service=mqtt"
+#      - "traefik.tcp.routers.mqttsecure.entrypoints=mqttsecure"
+#      - "traefik.tcp.routers.mqttsecure.tls=true"
+#      - "traefik.tcp.routers.mqttsecure.tls.certresolver=cloudflare"
+#      - "traefik.tcp.routers.mqttsecure.rule=HostSNI(`mqtts.alexetnico.com`)"
+#      - "traefik.tcp.routers.mqttsecure.service=mqtt"
 
   dozzle:
     container_name: dozzle
@@ -323,8 +323,8 @@ services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
-    ports:
-      - "3000:8080"  # Expose le port 8080 interne sur le port 3000 de l'hôte
+    #ports:
+    #  - "3000:8080"  # Expose le port 8080 interne sur le port 3000 de l'hôte
     environment:
       - OLLAMA_BASE_URL=http://192.168.2.141:11434
     volumes:
