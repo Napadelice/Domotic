@@ -101,6 +101,20 @@ http:
       service: service-gitea
       tls:
         certResolver: cloudflare
+    router-bot-dev:
+      entryPoints:
+        - websecure
+      rule: Host(`bot-dev.napadelice.ch`)
+      service: service-bot-dev
+      tls:
+        certResolver: cloudflare
+    router-bot:
+      entryPoints:
+        - websecure
+      rule: Host(`bot.napadelice.ch`)
+      service: service-bot
+      tls:
+        certResolver: cloudflare
 
   services:    
     service-dsm:
@@ -138,6 +152,16 @@ http:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.20:8418" 
+    service-bot-dev:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.230:8000"
+    service-bot:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.27:8000"
 
 tcp:
   middlewares:
