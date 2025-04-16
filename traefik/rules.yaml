@@ -115,6 +115,13 @@ http:
       service: service-bot
       tls:
         certResolver: cloudflare
+    router-statusbot:
+      entryPoints:
+        - websecure
+      rule: Host(`statusbot.napadelice.ch`)
+      service: service-statusbot
+      tls:
+        certResolver: cloudflare
 
   services:    
     service-dsm:
@@ -162,6 +169,11 @@ http:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.27:8000"
+    service-statusbot:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://192.168.2.27:8080"
 
 tcp:
   middlewares:

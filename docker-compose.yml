@@ -334,7 +334,7 @@ services:
       - napadelice
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.openwebui.rule=Host(`openwebui.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.openwebui.rule=Host(`openwebui.${DOMAIN1_TARGET_DOMAIN}`) || Host(`openwebui.${DOMAIN2_TARGET_DOMAIN}`)"
       - "traefik.http.routers.openwebui.entrypoints=websecure"
       - "traefik.http.routers.openwebui.tls.certresolver=cloudflare"
       - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
