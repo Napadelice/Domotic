@@ -41,7 +41,7 @@ ping: {}
 
 log:
     level: debug
-    filePath: /etc/traefik-log/traefik.log 
+    #filePath: /etc/traefik-log/traefik.log 
 
 api:
   dashboard: true
@@ -49,7 +49,7 @@ api:
   debug: true
 
 accessLog:
-    filePath: /etc/traefik-log/access.log
+    #filePath: /etc/traefik-log/access.log
     bufferingSize: 100
     fields: 
         headers:

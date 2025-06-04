@@ -464,16 +464,21 @@ services:
       - /srv/docker-data/data/minio:/data
     command: server /data --console-address ":9002"
     restart: unless-stopped
+    networks:
+      - napadelice
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minioconsole.rule=Host(`minioconsole.${DOMAIN1_TARGET_DOMAIN}`)"
       - "traefik.http.routers.minioconsole.entrypoints=websecure"
       - "traefik.http.routers.minioconsole.tls.certresolver=cloudflare"
       - "traefik.http.services.minioconsole.loadbalancer.server.port=9002" 
+      - "traefik.http.routers.minioconsole.service=minioconsole"
+      
       - "traefik.http.routers.minios3.rule=Host(`minios3.${DOMAIN1_TARGET_DOMAIN}`)"
       - "traefik.http.routers.minios3.entrypoints=websecure"
       - "traefik.http.routers.minios3.tls.certresolver=cloudflare"
       - "traefik.http.services.minios3.loadbalancer.server.port=9000"
+      - "traefik.http.routers.minios3.service=minios3"
 
 volumes:
   open-webui:
