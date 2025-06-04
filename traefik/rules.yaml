@@ -122,6 +122,13 @@ http:
       service: service-statusbot
       tls:
         certResolver: cloudflare
+    router-proxmox:
+      entryPoints:
+        - websecure
+      rule: Host(`proxmox.alexetnico.com`)
+      service: service-proxmox
+      tls:
+        certResolver: cloudflare
 
   services:    
     service-dsm:
@@ -163,7 +170,7 @@ http:
       loadBalancer:
         passHostHeader: true
         servers:
-        - url: "http://192.168.2.230:8000"
+        - url: "http://192.168.2.221:8000"
     service-bot:
       loadBalancer:
         passHostHeader: true
@@ -174,6 +181,12 @@ http:
         passHostHeader: true
         servers:
         - url: "http://192.168.2.27:8080"
+    service-proxmox:
+      loadBalancer:
+        passHostHeader: true
+        #insecureSkipVerify: true
+        servers:
+        - url: "https://192.168.2.141:8006"
 
 tcp:
   middlewares:

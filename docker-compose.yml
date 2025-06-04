@@ -451,6 +451,30 @@ services:
       - "traefik.http.routers.photoprism.tls.certresolver=cloudflare"
       - "traefik.http.services.photoprism.loadbalancer.server.port=2342" 
 
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"      # API S3
+      - "9002:9002"      # Console web
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    volumes:
+      - /srv/docker-data/data/minio:/data
+    command: server /data --console-address ":9002"
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minioconsole.rule=Host(`minioconsole.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.minioconsole.entrypoints=websecure"
+      - "traefik.http.routers.minioconsole.tls.certresolver=cloudflare"
+      - "traefik.http.services.minioconsole.loadbalancer.server.port=9002" 
+      - "traefik.http.routers.minios3.rule=Host(`minios3.${DOMAIN1_TARGET_DOMAIN}`)"
+      - "traefik.http.routers.minios3.entrypoints=websecure"
+      - "traefik.http.routers.minios3.tls.certresolver=cloudflare"
+      - "traefik.http.services.minios3.loadbalancer.server.port=9000"
+
 volumes:
   open-webui:
 networks:
