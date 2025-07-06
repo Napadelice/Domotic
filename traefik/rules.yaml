@@ -129,6 +129,13 @@ http:
       service: service-proxmox
       tls:
         certResolver: cloudflare
+    router-nextcloud:
+      entryPoints:
+        - websecure
+      rule: Host(`nextcloud.alexetnico.com`)
+      service: service-nextcloud
+      tls:
+        certResolver: cloudflare
 
   services:    
     service-dsm:
@@ -186,8 +193,13 @@ http:
         passHostHeader: true
         #insecureSkipVerify: true
         servers:
-        - url: "https://192.168.2.141:8006"
-
+        - url: "https://192.168.2.163:8006"
+    service-nextcloud:
+      loadBalancer:
+        passHostHeader: true
+        #insecureSkipVerify: true
+        servers:
+        - url: "https://192.168.2.29"
 tcp:
   middlewares:
     cloudflare-ipAllowList:
