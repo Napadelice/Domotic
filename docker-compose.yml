@@ -10,6 +10,7 @@ services:
       - 443:443
       - 8080:8080
       - 8082:8082
+      - 8883:8883
     environment:
       - DOCKER_HOST=tcp://socket-proxy:2375
       - TZ=Europe/Zurich
@@ -245,11 +246,12 @@ services:
       - "traefik.tcp.routers.mqtt.service=mqtt"
       - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
 
-#      - "traefik.tcp.routers.mqttsecure.entrypoints=mqttsecure"
-#      - "traefik.tcp.routers.mqttsecure.tls=true"
-#      - "traefik.tcp.routers.mqttsecure.tls.certresolver=cloudflare"
-#      - "traefik.tcp.routers.mqttsecure.rule=HostSNI(`mqtts.alexetnico.com`)"
-#      - "traefik.tcp.routers.mqttsecure.service=mqtt"
+      - "traefik.tcp.routers.mqttsecure.entrypoints=mqttsecure"
+      - "traefik.tcp.routers.mqttsecure.tls=true"
+      - "traefik.tcp.routers.mqttsecure.tls.certresolver=cloudflare"
+      - "traefik.tcp.routers.mqttsecure.rule=HostSNI(`mqtts.napadelice.ch`)"
+      - "traefik.tcp.routers.mqttsecure.service=mqtts"
+      - "traefik.tcp.services.mqtts.loadbalancer.server.port=1884"
 
   dozzle:
     container_name: dozzle

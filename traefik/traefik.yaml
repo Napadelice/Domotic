@@ -29,13 +29,6 @@ entryPoints:
         address: :1883
     mqttsecure:
         address: :8883
-        # tcp:
-        #     tls:
-        #         options:
-        #             mintls12:
-        #                 minVersion: VersionTLS12
-        #             mintls13:
-        #                 minVersion: VersionTLS13
 
 ping: {}
 
