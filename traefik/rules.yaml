@@ -147,7 +147,7 @@ http:
       loadBalancer:
         passHostHeader: true
         servers:
-        - url: "http://192.168.2.50:5000"
+        - url: "http://192.168.2.48:5000"
     service-emby:
       loadBalancer:
         passHostHeader: true
